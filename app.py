@@ -32,17 +32,17 @@ st.sidebar.header("Filters")
 
 store = st.sidebar.selectbox(
     "Select Store",
-    sorted(df["Store_ID"].unique())
+    sorted(df["Store_Location"].unique())
 )
 
 product = st.sidebar.selectbox(
     "Select Product (SKU)",
-    sorted(df["Product_ID"].unique())
+    sorted(df["Product_Category"].unique())
 )
 
 filtered_df = df[
-    (df["Store_ID"] == store) &
-    (df["Product_ID"] == product)
+    (df["Store_Location"] == store) &
+    (df["Product_Category"] == product)
 ]
 
 # ======================
