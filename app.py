@@ -50,7 +50,7 @@ filtered_df = df[
 # ======================
 st.subheader("📈 Sales over time")
 st.line_chart(
-    filtered_df.set_index("Date")["Sales"]
+    filtered_df.set_index("Date")["Sales_Volume"]
 )
 
 st.subheader("ℹ️ Business context")
