@@ -87,7 +87,7 @@ ax.plot(
 
 ax.plot(
     filtered_df["Date"],
-    filtered_df["Baseline"],
+    filtered_df["Baseline_Forecast"],
     label="Baseline Forecast"
 )
 
