@@ -81,7 +81,7 @@ fig, ax = plt.subplots()
 
 ax.plot(
     filtered_df["Date"],
-    filtered_df["Sales"],
+    filtered_df["Sales_Volume"],
     label="Actual Sales"
 )
 
