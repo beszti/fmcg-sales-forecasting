@@ -113,13 +113,13 @@ fig, ax = plt.subplots()
 
 ax.plot(
     filtered_df["Date"],
-    filtered_df["Sales"],
+    filtered_df["Sales_Volume"],
     label="Actual Sales"
 )
 
 ax.scatter(
     promo_days["Date"],
-    promo_days["Sales"],
+    promo_days["Sales_Volume"],
     color="red",
     label="Promotion Days"
 )
@@ -133,11 +133,11 @@ st.pyplot(fig)
 chart_df = filtered_df.copy()
 
 chart_df["Promotion_Sales"] = chart_df.apply(
-    lambda row: row["Sales"] if row["Promotion"] == 1 else None,
+    lambda row: row["Sales_Volume"] if row["Promotion"] == 1 else None,
     axis=1
 )
 
-chart_df = chart_df.set_index("Date")[["Sales", "Promotion_Sales"]]
+chart_df = chart_df.set_index("Date")[["Sales_Volume", "Promotion_Sales"]]
 st.subheader("Sales and Promotion Days")
 st.line_chart(chart_df)
 
