@@ -74,7 +74,7 @@ st.info(
     more complex machine learning models.
     """
 )
-baseline_df = moving_average_forecast(filtered_df)
+filtered_df = moving_average_forecast(filtered_df)
 st.line_chart(baseline_df.set_index("Date")["Sales_Volume"])
 
 fig, ax = plt.subplots()
