@@ -40,7 +40,7 @@ store = st.sidebar.selectbox(
 
 product = st.sidebar.selectbox(
     "Select Product (SKU)",
-    sorted(df[df["Store"] == store]["Product_Category"].unique())
+    sorted(df[df["Store_Location"] == store]["Product_Category"].unique())
 )
 
 filtered_df = df[
