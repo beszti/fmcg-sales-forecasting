@@ -75,7 +75,7 @@ st.info(
     """
 )
 filtered_df = moving_average_forecast(filtered_df)
-st.line_chart(baseline_df.set_index("Date")["Sales_Volume"])
+st.line_chart(filtered_df.set_index("Date")["Sales_Volume"])
 
 fig, ax = plt.subplots()
 
