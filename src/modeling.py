@@ -8,7 +8,7 @@ def moving_average_forecast(df, window=7):
     df = df.sort_values("Date").copy()
 
     df["Baseline_Forecast"] = (
-        df["Sales"]
+        df["Sales_Volume"]
         .rolling(window=window)
         .mean()
         .shift(1)
