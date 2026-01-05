@@ -97,10 +97,50 @@ ax.legend()
 
 st.pyplot(fig)
 
-valid = filtered_df.dropna(subset=["Baseline"])
+valid = filtered_df.dropna(subset=["Baseline_Forecast"])
 baseline_mape = mape(valid["Sales_Volume"], valid["Baseline_Forecast"])
 
 st.metric(
     label="Baseline MAPE (%)",
     value=f"{mape_value:.2f}"
+)
+
+st.subheader("Promotion Impact Visualization")
+
+promo_days = filtered_df[filtered_df["Promotion"] == 1]
+
+fig, ax = plt.subplots()
+
+ax.plot(
+    filtered_df["Date"],
+    filtered_df["Sales"],
+    label="Actual Sales"
+)
+
+ax.scatter(
+    promo_days["Date"],
+    promo_days["Sales"],
+    color="red",
+    label="Promotion Days"
+)
+
+ax.set_xlabel("Date")
+ax.set_ylabel("Units Sold")
+ax.legend()
+
+st.pyplot(fig)
+
+chart_df = filtered_df.copy()
+
+chart_df["Promotion_Sales"] = chart_df.apply(
+    lambda row: row["Sales"] if row["Promotion"] == 1 else None,
+    axis=1
+)
+
+chart_df = chart_df.set_index("Date")[["Sales", "Promotion_Sales"]]
+st.subheader("Sales and Promotion Days")
+st.line_chart(chart_df)
+
+st.info(
+    "Promotions distort historical sales patterns and require separate handling."
 )
