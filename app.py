@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+from src.modeling import moving_average_forecast
+from src.metrics import mape
 
 st.set_page_config(
     page_title="FMCG Demand Forecasting",
@@ -60,4 +62,26 @@ st.info(
     Demand may be higher in case of stockouts.
     Forecasting helps reduce inventory risk.
     """
+)
+
+
+st.subheader("📈 Baseline Forecast vs Actual Sales")
+st.info(
+    """
+    The baseline forecast represents expected demand under normal conditions
+    without promotional effects. It is used as a reference to evaluate
+    more complex machine learning models.
+    """
+)
+baseline_df = moving_average_forecast(filtered_df)
+st.line_chart(baseline_df.set_index("Date")["Sales_Volume"])
+
+baseline_mape = mape(
+    plot_df["Sales"],
+    plot_df["Baseline_Forecast"]
+)
+
+st.metric(
+    label="Baseline MAPE (%)",
+    value=f"{baseline_mape:.2f}"
 )
