@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 from src.modeling import moving_average_forecast
 from src.metrics import mape
 
@@ -39,13 +40,13 @@ store = st.sidebar.selectbox(
 
 product = st.sidebar.selectbox(
     "Select Product (SKU)",
-    sorted(df["Product_Category"].unique())
+    sorted(df[df["Store"] == store]["Product_Category"].unique())
 )
 
 filtered_df = df[
     (df["Store_Location"] == store) &
     (df["Product_Category"] == product)
-]
+].sort_values("Date")
 
 # ======================
 # Main view
@@ -76,12 +77,30 @@ st.info(
 baseline_df = moving_average_forecast(filtered_df)
 st.line_chart(baseline_df.set_index("Date")["Sales_Volume"])
 
-baseline_mape = mape(
-    plot_df["Sales_Volume"],
-    plot_df["Baseline_Forecast"]
+fig, ax = plt.subplots()
+
+ax.plot(
+    filtered_df["Date"],
+    filtered_df["Sales"],
+    label="Actual Sales"
 )
+
+ax.plot(
+    filtered_df["Date"],
+    filtered_df["Baseline"],
+    label="Baseline Forecast"
+)
+
+ax.set_xlabel("Date")
+ax.set_ylabel("Units Sold")
+ax.legend()
+
+st.pyplot(fig)
+
+valid = filtered_df.dropna(subset=["Baseline"])
+baseline_mape = mape(valid["Sales_Volume"], valid["Baseline_Forecast"])
 
 st.metric(
     label="Baseline MAPE (%)",
-    value=f"{baseline_mape:.2f}"
+    value=f"{mape_value:.2f}"
 )
