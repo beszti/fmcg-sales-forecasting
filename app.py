@@ -77,7 +77,7 @@ baseline_df = moving_average_forecast(filtered_df)
 st.line_chart(baseline_df.set_index("Date")["Sales_Volume"])
 
 baseline_mape = mape(
-    plot_df["Sales"],
+    plot_df["Sales_Volume"],
     plot_df["Baseline_Forecast"]
 )
 
