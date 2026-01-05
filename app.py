@@ -102,7 +102,7 @@ baseline_mape = mape(valid["Sales_Volume"], valid["Baseline_Forecast"])
 
 st.metric(
     label="Baseline MAPE (%)",
-    value=f"{mape_value:.2f}"
+    value=f"{baseline_mape:.2f}"
 )
 
 st.subheader("Promotion Impact Visualization")
